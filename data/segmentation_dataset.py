@@ -45,7 +45,8 @@ class SUNRGBD(Dataset):
                    0.750738, 4.040773]
 
         self.ignore_label = 255
-
+        self.seg_dir_train=[]
+        self.seg_dir_test=[]
         try:
             with open(img_dir_train_file, 'r') as f:
                 self.img_dir_train = f.read().splitlines()
@@ -59,10 +60,8 @@ class SUNRGBD(Dataset):
 
             with open(label_dir_train_file, 'r') as f:
                 self.label_dir_train = f.read().splitlines()
-            self.seg_dir_train=self.label_dir_train
             for i in range(len(self.label_dir_train)):
-                self.seg_dir_train[i]=self.label_dir_train[i].split(".")[0]+"seg.npy"
-
+                self.seg_dir_train.append(self.label_dir_train[i].split(".")[0]+"seg.npy")
 
             with open(img_dir_test_file, 'r') as f:
                 self.img_dir_test = f.read().splitlines()
@@ -77,9 +76,8 @@ class SUNRGBD(Dataset):
 
             with open(label_dir_test_file, 'r') as f:
                 self.label_dir_test = f.read().splitlines()
-            self.seg_dir_test=self.label_dir_test
             for i in range(len(self.label_dir_test)):
-                self.seg_dir_test[i]=self.label_dir_test[i].split(".")[0]+"seg.npy"
+                self.seg_dir_test.append(self.label_dir_test[i].split(".")[0]+"seg.npy")
 
         except:
             if data_dir is None:
